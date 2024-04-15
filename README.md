@@ -2,7 +2,7 @@
 
 Cast local or streaming media to your TV through UPnP/DLNA.
 Based on thibauts [node-upnp-mediarenderer-client](https://github.com/thibauts/node-upnp-mediarenderer-client).
-A fork of Simon Kusterer[xat]/[dlnacast](https://github.com/xat/dlnacast).
+A fork of Simon Kusterer [xat]/[dlnacast](https://github.com/xat/dlnacast).
 Thanks to Miroslav Rudišin [miero](https://github.com/miero).
 
 ### usage

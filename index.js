@@ -68,12 +68,15 @@ function runDLNA (cli, fileUrl, subUrl, type, name) {
       if (key && key.name && key.name === 'space') {
         if (isPlaying) {
           cli.pause()
+          console.log('paused')
         } else {
           cli.play()
+          console.log('playing')
         }
       }
 
       if (key && key.ctrl && key.name === 'c') {
+        console.log('exit')
         process.exit()
       }
     })
@@ -132,6 +135,7 @@ module.exports = {
     connect(address, function (cli) {
         switch (command) {
             case 'play':
+                console.log('play')
                 cli.play()
                 break
             case 'pause':
@@ -139,6 +143,7 @@ module.exports = {
                 cli.pause()
                 break
             case 'stop':
+                console.log('stop')
                 cli.stop()
                 break
             default:
@@ -219,9 +224,9 @@ if (require.main === module) {
   } else if (opts._.length) {
     module.exports.renderMedia(opts._[0], opts.type, address, opts.subtitle)  
   } else {
-    console.log('Usage: dlnacast [--type <mime>] [--address <tv-ip>] [--subtitle <file>] <file>')
-    console.log('Usage: dlnacast [--type <mime>] [--address <tv-ip>] --stream <URL>')
-    console.log('Usage: dlnacast --listRenderer')
+    console.log('Play file: dlnacast [--type <mime>] [--address <tv-ip>] [--subtitle <file>] <file>')
+    console.log('Play stream: dlnacast [--type <mime>] [--address <tv-ip>] --stream <URL>')
+    console.log('List your DLNA devices: dlnacast --listRenderer')
     process.exit()
   }
 }
