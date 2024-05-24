@@ -7,7 +7,7 @@
     "dlnacast": "./index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --runInBand --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
@@ -20,10 +20,11 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xat/dlnacast/issues"
+    "url": "https://github.com/zadorozhko/dlnacast/issues"
   },
-  "homepage": "https://github.com/xat/dlnacast",
+  "homepage": "https://github.com/zadorozhko/dlnacast",
   "dependencies": {
+    "jest": "^29.7.0",
     "keypress": "^0.2.1",
     "mime": "^1.3.4",
     "minimist": "^1.1.1",

@@ -7,7 +7,7 @@ var keypress = require('keypress')
 var mime = require('mime')
 var opts = minimist(process.argv.slice(2))
 var MediaRendererClient = require('upnp-mediarenderer-client')
-var smfs = require('static-file-server')
+var smfs = require('./smfs')
 var path = require('path')
 
 function isValidHttpUrl(string) {
@@ -132,6 +132,7 @@ var connect = function (address, cb) {
 }
 
 module.exports = {
+  isValidHttpUrl, smfs,
   listRenderer: function (cb) {
     var finder = new RendererFinder()
 
