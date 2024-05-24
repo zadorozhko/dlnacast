@@ -12,7 +12,15 @@ dlnacast [--type <mime>] [--address <tv-ip>] [--subtitle <file>] <file>
 dlnacast [--type <mime>] [--address <tv-ip>] --stream <stream>
 dlnacast --listRenderer
 ```
+My zoo looks like this:
+```
+iMedia: http://192.168.88.254:38388/deviceDescription/MediaRenderer
+ATV_254: http://192.168.88.254:49153/description.xml
+EZCast: http://192.168.88.230:60099/
+```
 stream is a casting url or m3u8 playlist.
+tv-ip is a device name or http://ip-address:port from listRenderer command.
+
 ### Installation
 
 `npm install dlnacast -g`

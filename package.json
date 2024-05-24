@@ -1,7 +1,7 @@
 {
   "name": "dlnacast",
-  "version": "0.0.3",
-  "description": "cast local media to your TV using UPnP/DLNA",
+  "version": "0.0.4",
+  "description": "cast local or stream media to your TV using UPnP/DLNA",
   "main": "index.js",
   "bin": {
     "dlnacast": "./index.js"
@@ -11,10 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/xat/dlnacast"
+    "url": "https://github.com/zadorozhko/dlnacast"
   },
-  "author": "Simon Kusterer",
+  "author": "Ilia Zadorozhko <zadorozhko@gmail.com>",
   "contributors": [
+    "Simon Kusterer <simon@soped.com>",
     "Manuel Rueda <manuel.rueda.un@gmail.com>"
   ],
   "license": "MIT",

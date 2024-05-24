@@ -10,6 +10,24 @@ var MediaRendererClient = require('upnp-mediarenderer-client')
 var smfs = require('static-file-server')
 var path = require('path')
 
+function isValidHttpUrl(string) {
+  let url;
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+  return url.protocol === "http:" || url.protocol === "https:";
+}
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
 function DIDLMetadata (url, type, title, subtitle) {
   var DIDL = ''
   DIDL = DIDL + '<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sec="http://www.sec.co.kr/">'
@@ -68,15 +86,12 @@ function runDLNA (cli, fileUrl, subUrl, type, name) {
       if (key && key.name && key.name === 'space') {
         if (isPlaying) {
           cli.pause()
-          console.log('paused')
         } else {
           cli.play()
-          console.log('playing')
         }
       }
 
       if (key && key.ctrl && key.name === 'c') {
-        console.log('exit')
         process.exit()
       }
     })
@@ -135,7 +150,6 @@ module.exports = {
     connect(address, function (cli) {
         switch (command) {
             case 'play':
-                console.log('play')
                 cli.play()
                 break
             case 'pause':
@@ -143,7 +157,6 @@ module.exports = {
                 cli.pause()
                 break
             case 'stop':
-                console.log('stop')
                 cli.stop()
                 break
             default:
@@ -220,13 +233,28 @@ if (require.main === module) {
       console.log(desc.device.friendlyName + ': ' + msg.location)
     })
   } else if (opts.stream) {
-    module.exports.renderStream(opts.stream, opts.type, address)
+    if(isValidHttpUrl(address)) {
+      console.log("Streaming to " + address);
+      module.exports.renderStream(opts.stream, opts.type, address);
+    } else {
+      console.log("Searching for " + address);
+      module.exports.listRenderer(function (err, info, msg, desc) {
+        if (err) {
+          console.log(err);
+          process.exit();
+        }
+        if(address === desc.device.friendlyName){
+          console.log("Found "+desc.device.friendlyName + ' at ' + msg.location);
+          module.exports.renderStream(opts.stream, opts.type, msg.location);
+        }
+      });
+    }
   } else if (opts._.length) {
     module.exports.renderMedia(opts._[0], opts.type, address, opts.subtitle)  
   } else {
-    console.log('Play file: dlnacast [--type <mime>] [--address <tv-ip>] [--subtitle <file>] <file>')
-    console.log('Play stream: dlnacast [--type <mime>] [--address <tv-ip>] --stream <URL>')
-    console.log('List your DLNA devices: dlnacast --listRenderer')
+    console.log('Usage: dlnacast [--type <mime>] [--address <tv-ip>] [--subtitle <file>] <file>')
+    console.log('Usage: dlnacast [--type <mime>] [--address <tv-ip>] --stream <URL>')
+    console.log('Usage: dlnacast --listRenderer')
     process.exit()
   }
 }
